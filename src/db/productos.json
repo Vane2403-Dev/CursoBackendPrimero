@@ -31,5 +31,16 @@
     "status": "true",
     "code": "RRA",
     "stock": 300
+  },
+  {
+    "id": 6,
+    "title": "Remera",
+    "description": "Remera Azul",
+    "category": "Indumentaria",
+    "price": 250,
+    "thumbnail": "",
+    "status": "true",
+    "code": "RRA",
+    "stock": 300
   }
 ]

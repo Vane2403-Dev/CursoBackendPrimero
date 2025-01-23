@@ -19,16 +19,23 @@ class CartManager {
         await fs.writeFile(this.filePath, JSON.stringify(carts, null, 2), 'utf8');
     }
 /// crear
-    async createCart() {
+    async createCart(productId) {
+      
         const carts = await this._getCarts();
         const newCart = {
             id: carts.length ? carts[carts.length - 1].id + 1 : 1, 
-            productscarrito: []
+            productscarrito: [
+                {
+                    product: Number(productId),
+                    quantity: 1 // Inicializa con 1 producto
+                }
+            ]
         };
         carts.push(newCart);
         await this._saveCarts(carts);
-        return newCart;no
+        return newCart;
     }
+
 /// obtener carrito por id 
     async getCartById(cartId) {
         const carts = await this._getCarts();
@@ -37,7 +44,7 @@ class CartManager {
 //// agregar al carrito 
     async addProductToCart(cartId, productId) {
         const carts = await this._getCarts();
-        const cart = carts.find(cart => cart.id === Number(cartId));
+        const cart = carts.find(cart => cart.id === (cartId));
         if (!cart) throw new Error(`Carrito con ID ${cartId} no encontrado`);
 
         const productIndex = cart.productscarrito.findIndex(product => product.product === Number(productId));

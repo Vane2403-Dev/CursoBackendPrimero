@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import CartsManager from '../cartsManager.js';
 
@@ -8,24 +7,49 @@ const manager = new CartsManager();
 // Ruta POST /: Crear un nuevo carrito
 router.post('/', async (req, res) => {
     try {
-        const newCart = await manager.createCart();
+        // Extraemos el productId del cuerpo de la solicitud
+        const { productId } = req.body;  // Asegúrate de que el cliente envíe el 'productId'
+
+        // Convertimos el productId a número
+        const productIdNumber = Number(productId);
+
+        // Verificamos si el productId es un número válido
+        if (isNaN(productIdNumber)) {
+            return res.status(400).send({ error: 'El productId debe ser un número válido' });
+        }
+
+        // Llamamos a la función para crear el carrito
+        const newCart = await manager.createCart(productIdNumber);
+
+        // Respondemos con el carrito creado
         res.status(201).send({ message: 'Carrito creado exitosamente', cart: newCart });
     } catch (error) {
+        // Si ocurre un error, respondemos con un mensaje de error
         res.status(500).send({ error: error.message });
     }
 });
 
-// Ruta GET /:cid: Obtener productos de un carrito específico
 router.get('/:cid', async (req, res) => {
     try {
         const cartId = req.params.cid;
-        const cart = await manager.getCartById(cartId);
-        if (!cart) {
-            return res.status(404).send({ error: `Carrito con ID ${cartId} no encontrado` });
+        
+        // Convertir el cartId a número
+        const cartIdNumber = Number(cartId);
+
+        // Verificar si cartIdNumber es un número válido
+        if (isNaN(cartIdNumber)) {
+            return res.status(400).send({ error: 'El cartId debe ser un número válido' });
         }
-        res.send(cart.products);
+
+        const cart = await manager.getCartById(cartIdNumber);
+
+        if (!cart) {
+            return res.status(404).send({ error: `Carrito con ID ${cartIdNumber} no encontrado` });
+        }
+
+        res.json(cart);
     } catch (error) {
-        res.status(500).send({ error: error.message });
+        res.status(400).send({ error: error.message });
     }
 });
 
@@ -34,7 +58,18 @@ router.post('/:cid/product/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
-        const updatedCart = await manager.addProductToCart(cartId, productId);
+
+        // Verificar si cartId y productId son números válidos
+    
+        const productIdNumber = Number(productId);
+        const cartIdNumber = Number(cartId);
+
+        if (isNaN(cartIdNumber) || isNaN(productIdNumber)) {
+            return res.status(400).send({ error: 'El cartId y productId deben ser números válidos' });
+        }
+
+        // Llamar a la función para agregar el producto al carrito
+        const updatedCart = await manager.addProductToCart(cartIdNumber, productIdNumber);
         res.send({ message: 'Producto agregado al carrito', cart: updatedCart });
     } catch (error) {
         res.status(500).send({ error: error.message });
