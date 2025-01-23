@@ -1,6 +1,7 @@
 import express from 'express'
 import __dirname from './utils.js'
 import productRouter from './routes/productRouter.js'
+import cartsRouter from './routes/cartsRouter.js'
 
 
 
@@ -23,7 +24,9 @@ app.use((req, res, next) => {
 })
 
 // Definimos el routers
-app.use('/products', productRouter)
+app.use('/api/products', productRouter)
+
+app.use('/api/carts', cartsRouter)
 
 
 
@@ -31,4 +34,9 @@ app.use('/products', productRouter)
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
 })
+
+
+
+
+
 

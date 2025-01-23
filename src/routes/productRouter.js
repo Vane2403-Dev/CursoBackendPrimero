@@ -1,52 +1,66 @@
+import { Router } from 'express';
+import ProductsManager from '../productsManager.js';
 
-import { Router } from 'express'
-import productsManager from '../productsManager.js'
+const router = new Router();
+const manager = new ProductsManager();
 
-const router = new Router()
-
-// Crea una instancia de ProductsManager
-const manager = new productsManager()
-
-// Obtener todos los productos  - LISTAR
+// Ruta raíz: Obtener todos los productos
 router.get('/', async (req, res) => {
     try {
-        // Usar la instancia 'manager' para llamar a los métodos
-        const productos = await manager.consultarProductos()  // Cambiado de productsManager a manager
-        res.json(productos)
+        const productos = await manager.consultarProductos();
+        res.json(productos);
     } catch (error) {
-        res.status(400).json({ error: 'Error al obtener los productos' })
+        res.status(500).json({ error: 'Error al obtener los productos' });
     }
-})
-
-// Crear todos los productos
-router.post('/', async (req, res) => {
-    try {
-        const nuevoProducto = req.body
-        // Usar la instancia 'manager' para llamar a los métodos
-        await manager.createProduct(nuevoProducto)  // Cambiado de productsManager a manager
-        res.status(201).json({ message: 'Producto creado exitosamente' })
-    } catch (error) {
-        res.status(400).json({ error: 'Error al crear el producto' })
-    }
-})
+});
 
 // Ruta para obtener un producto por su ID
 router.get('/:pid', async (req, res) => {
-    const { pid } = req.params // Obtener el id desde los parámetros de la URL
-
+    const { pid } = req.params;
     try {
-        // Usar la instancia 'manager' para llamar a los métodos
-        const productos = await manager.consultarProductos()  // Cambiado de productsManager a manager
-        const producto = productos.find(p => p.id == pid)
-
-        if (producto) {
-            res.json(producto)
-        } else {
-            res.status(404).json({ error: 'Producto no encontrado' })
+        const productos = await manager.consultarProductos();
+        const producto = productos.find(p => p.id === Number(pid));
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
         }
+        res.json(producto);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el producto por ID' })
+        res.status(500).json({ error: 'Error al obtener el producto' });
     }
-})
+});
 
-export default router
+// Ruta para crear un nuevo producto
+router.post('/', async (req, res) => {
+    try {
+        const nuevoProducto = req.body;
+        await manager.createProduct(nuevoProducto);
+        res.status(201).json({ message: 'Producto creado exitosamente' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Ruta para actualizar un producto por su ID
+router.put('/:pid', async (req, res) => {
+    const { pid } = req.params;
+    const updatedData = req.body;
+    try {
+        await manager.actualizarProducto(pid, updatedData);
+        res.json({ message: `Producto con ID ${pid} actualizado exitosamente` });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Ruta para eliminar un producto por su ID
+router.delete('/:pid', async (req, res) => {
+    const { pid } = req.params;
+    try {
+        await manager.eliminarProducto(pid);
+        res.json({ message: `Producto con ID ${pid} eliminado exitosamente` });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+export default router;
