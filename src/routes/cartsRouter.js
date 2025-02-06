@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CartsManager from '../cartsManager.js';
+import CartsManager from '../logica/cartsManager';
 
 const router = Router();
 const manager = new CartsManager();
