@@ -1,0 +1,33 @@
+
+ {{#each products}}
+  <div class="product-card">
+    <h2>{{title}}</h2>
+    <p><strong>Descripción:</strong> {{description}}</p>
+    <p><strong>Categoría:</strong> {{category}}</p>
+    <p><strong>Precio:</strong> ${{price}}</p>
+    <p><strong>Stock:</strong> {{stock}}</p>
+    {{#if thumbnail}}
+      <img src="{{thumbnail}}" alt="Imagen de {{title}}">
+    {{else}}
+      <p>Sin imagen disponible</p>
+    {{/if}}
+  </div>
+{{/each}}
+
+<style>
+  .product-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+    background-color: #f9f9f9;
+  }
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+
