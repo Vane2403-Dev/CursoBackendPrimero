@@ -22,7 +22,7 @@
     "stock": 200
   },
   {
-    "id": 5,
+    "id": 6,
     "title": "Remera",
     "description": "Remera Azul",
     "category": "Indumentaria",
@@ -33,14 +33,21 @@
     "stock": 300
   },
   {
-    "id": 6,
-    "title": "Remera",
-    "description": "Remera Azul",
-    "category": "Indumentaria",
-    "price": 250,
-    "thumbnail": "",
-    "status": "true",
-    "code": "RRA",
-    "stock": 300
+    "id": 7,
+    "title": "pantalon",
+    "description": "pantalon reef ",
+    "category": "indummentaria ",
+    "price": 10000,
+    "stock": 200,
+    "thumbnail": null
+  },
+  {
+    "id": 8,
+    "title": "remera",
+    "description": "remera verde patagonia",
+    "category": "indummentaria ",
+    "price": 15000,
+    "stock": 100,
+    "thumbnail": null
   }
 ]

@@ -33,6 +33,7 @@ document.getElementById('product-form').addEventListener('submit', (e) => {
         stock: parseInt(document.getElementById('stock').value),
         thumbnail: document.getElementById('thumbnail')?.value || null
     };
+    
 
     socket.emit('nuevoProducto', newProduct);
     e.target.reset();
