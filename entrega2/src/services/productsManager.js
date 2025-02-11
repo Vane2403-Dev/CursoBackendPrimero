@@ -10,7 +10,7 @@ class ProductsManager {
     async createProduct(data) {
         try {
             // Validar campos requeridos
-            const requiredFields = ['title', 'description', 'code', 'price', 'stock', 'category', 'status'];
+            const requiredFields = ['title', 'description', 'price', 'stock', 'category', 'status'];
             for (let field of requiredFields) {
                 if (data[field] === undefined) {
                     throw new Error(`El campo '${field}' es obligatorio`);
