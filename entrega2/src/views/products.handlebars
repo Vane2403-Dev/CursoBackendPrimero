@@ -1,4 +1,5 @@
 
+ <div id="product-list">
  {{#each products}}
   <div class="product-card">
     <h2>{{title}}</h2>
@@ -13,6 +14,7 @@
     {{/if}}
   </div>
 {{/each}}
+</div>
 
 <style>
   .product-card {
@@ -32,3 +34,4 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
+

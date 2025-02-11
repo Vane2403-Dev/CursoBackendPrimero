@@ -14,12 +14,11 @@
   <label for="stock">Stock:</label>
   <input type="number" id="stock" name="stock" required>
   
-  <label for="thumbnail">Imagen URL:</label>
-  <input type="text" id="thumbnail" name="thumbnail">
-  
   <button type="submit">Agregar Producto</button>
 </form>
 
+<div id="product-list">
+  
 {{#each products}}
   <div class="product-card">
     <h2>{{title}}</h2>
@@ -35,6 +34,8 @@
     <button class="delete-button" data-id="{{id}}">Eliminar</button>
   </div>
 {{/each}}
+
+</div>
 
 <style>
   .product-card {
@@ -60,3 +61,4 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
+

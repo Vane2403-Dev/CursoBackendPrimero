@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import ProductsManager from '../productsManager.js';
+import ProductsManager from '../services/productsManager.js';
+import { io } from '../app.js'; 
 
 const router = new Router();
 const manager = new ProductsManager();
 
-// Ruta raíz: Obtener todos los productos
+// Obtener todos los productos
 router.get('/', async (req, res) => {
     try {
         const productos = await manager.consultarProductos();
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Ruta para obtener un producto por su ID
+// Obtener un producto por su ID
 router.get('/:pid', async (req, res) => {
     const { pid } = req.params;
     try {
@@ -29,34 +30,45 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-// Ruta para crear un nuevo producto
+// Crear un nuevo producto y notificar a los clientes
 router.post('/', async (req, res) => {
     try {
         const nuevoProducto = req.body;
         await manager.createProduct(nuevoProducto);
+        const productosActualizados = await manager.consultarProductos();
+        
+        io.emit('updateProducts', productosActualizados); 
         res.status(201).json({ message: 'Producto creado exitosamente' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-// Ruta para actualizar un producto por su ID
+// Actualizar un producto por su ID y notificar a los clientes
 router.put('/:pid', async (req, res) => {
     const { pid } = req.params;
     const updatedData = req.body;
     try {
         await manager.actualizarProducto(pid, updatedData);
+        const productosActualizados = await manager.consultarProductos();
+        
+        io.emit('updateProducts', productosActualizados); // Notificar actualización en tiempo real
+
         res.json({ message: `Producto con ID ${pid} actualizado exitosamente` });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-// Ruta para eliminar un producto por su ID
+// Eliminar un producto por su ID y notificar a los clientes
 router.delete('/:pid', async (req, res) => {
     const { pid } = req.params;
     try {
         await manager.eliminarProducto(pid);
+        const productosActualizados = await manager.consultarProductos();
+        
+        io.emit('updateProducts', productosActualizados); // Notificar actualización en tiempo real
+
         res.json({ message: `Producto con ID ${pid} eliminado exitosamente` });
     } catch (error) {
         res.status(400).json({ error: error.message });

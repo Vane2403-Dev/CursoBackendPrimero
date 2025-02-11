@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import __dirname from './utils.js';
+import __dirname from '../utils.js';
 
 class ProductsManager {
     constructor() {
