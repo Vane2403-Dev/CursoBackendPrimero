@@ -18,7 +18,19 @@
 </form>
 
 
-<div id="product-list"></div>
+<div id="product-list">
+   {{#each products}}
+  <div class="product-card">
+    <h2>{{title}}</h2>
+    <p><strong>Descripción:</strong> {{description}}</p>
+    <p><strong>Categoría:</strong> {{category}}</p>
+    <p><strong>Precio:</strong> ${{price}}</p>
+    <p><strong>Stock:</strong> {{stock}}</p>
+   <button class="delete-button" data-id="{{_id}}">Eliminar</button>
+  </div>
+{{/each}}
+</div>
+</div>
 
 <style>
   .product-card {

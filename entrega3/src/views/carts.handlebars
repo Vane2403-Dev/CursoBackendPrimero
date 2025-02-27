@@ -1,14 +1,15 @@
+<div id="carrito-list">
+  <h1>Carrito {{cart.id}}</h1>
+  
+  {{#each cart.productscarrito}}
+    <div class="carrito-card">
+      <h2>Producto {{addOne @index}} </h2>
+      <p><strong>ID del producto:</strong> {{product}}</p>
+      <p><strong>Cantidad:</strong> {{quantity}}</p>
+    </div>
+  {{/each}}
 
- <div id="carrito-list">
- {{#each carts}}
-  <div class="carrito-card">
-    <h2>{{data-id}}</h2>
-    <p><strong>Descripción:</strong> {{description}}</p>
-    <p><strong>Categoría:</strong> {{category}}</p>
-    <p><strong>Precio:</strong> ${{price}}</p>
-    <p><strong>Stock:</strong> {{stock}}</p>
-  </div>
-{{/each}}
+</div>
 
 <style>
   .carrito-card {
@@ -20,6 +21,6 @@
     display: inline-block;
     background-color: #f9f9f9;
   }
-
 </style>
+
 

@@ -1,7 +1,7 @@
 import express from 'express';
 import { Server } from 'socket.io';
 import http from 'http';
-import handlebars from 'express-handlebars';
+import { engine } from 'express-handlebars';
 import __dirname from './utils.js';
 import ProductsManager from './services/productServices.js';
 import router from "./routes/router.js";
@@ -33,10 +33,17 @@ app.use("/", router);
 
 
 
-// Configuración Handlebars
-app.engine('handlebars', handlebars.engine());
+// Configuración de Handlebars con el helper addOne
+app.engine('handlebars', engine({
+    helpers: {
+        addOne: (value) => value + 1
+    }
+}));
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
+
+/// agregar uno en 
+
 
 
 // Inicializar Servidor HTTP
@@ -61,7 +68,7 @@ io.on('connection', async (socket) => {
         await manager.eliminarProducto(productId);
         io.emit('productosActualizados', await manager.consultarProductos());
     });
-a
+
     socket.on('disconnect', () => {
         console.log('Cliente desconectado');
     });

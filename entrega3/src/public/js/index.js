@@ -18,7 +18,6 @@ socket.on('productosActualizados', (productos) => {
             <p><strong>Categoría:</strong> ${producto.category}</p>
             <p><strong>Precio:</strong> $${producto.price}</p>
             <p><strong>Stock:</strong> ${producto.stock}</p>
-            ${producto.thumbnail ? `<img src="${producto.thumbnail}" alt="${producto.title}">` : '<p>Sin imagen disponible</p>'}
             <button class="delete-button" data-id="${producto._id}">Eliminar</button>
         `;
         container.appendChild(div);

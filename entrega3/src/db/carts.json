@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "productscarrito": [
+      {
+        "product": "67bf054223108fcf2d0acdb3",
+        "quantity": 2
+      },
+      {
+        "product": "67c048b9ff8606c56740e404",
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "productscarrito": [
+      {
+        "product": "67c048a8ff8606c56740e401",
+        "quantity": 1
+      },
+      {
+        "product": "67c0486fff8606c56740e3fb",
+        "quantity": 4
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "productscarrito": [
+      {
+        "product": "67bf052923108fcf2d0acdb0",
+        "quantity": 1
+      },
+      {
+        "product": "67c0488cff8606c56740e3fe",
+        "quantity": 9
+      }
+    ]
+  }
+]
