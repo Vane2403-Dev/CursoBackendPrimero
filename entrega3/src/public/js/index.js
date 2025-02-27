@@ -1,4 +1,8 @@
-const socket = io();
+const socket = io();   
+
+
+
+
 
 // Escuchar la actualización de productos y renderizar en la página
 socket.on('productosActualizados', (productos) => {
@@ -15,7 +19,7 @@ socket.on('productosActualizados', (productos) => {
             <p><strong>Precio:</strong> $${producto.price}</p>
             <p><strong>Stock:</strong> ${producto.stock}</p>
             ${producto.thumbnail ? `<img src="${producto.thumbnail}" alt="${producto.title}">` : '<p>Sin imagen disponible</p>'}
-            <button class="delete-button" data-id="${producto.id}">Eliminar</button>
+            <button class="delete-button" data-id="${producto._id}">Eliminar</button>
         `;
         container.appendChild(div);
     });
@@ -38,7 +42,6 @@ document.getElementById('product-form').addEventListener('submit', (e) => {
     socket.emit('nuevoProducto', newProduct);
     e.target.reset();
 });
-
 // Escuchar evento de clic en los botones "Eliminar"
 document.addEventListener('click', (event) => {
     if (event.target.classList.contains('delete-button')) {
@@ -46,3 +49,4 @@ document.addEventListener('click', (event) => {
         socket.emit('eliminarProducto', productId);
     }
 });
+

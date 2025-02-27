@@ -3,30 +3,41 @@ import { Server } from 'socket.io';
 import http from 'http';
 import handlebars from 'express-handlebars';
 import __dirname from './utils.js';
-import productRoutes from './routes/productRouter.js';
-import cartRoutes from './routes/cartsRouter.js';
-import ProductsManager from './services/productsManager.js';
-import viewRoutes from './routes/viewsRouter.js'
+import ProductsManager from './services/productServices.js';
+import router from "./routes/router.js";
+import mongoose from 'mongoose';
 
 const app = express();
 const PORT = 8080;
 const manager = new ProductsManager();
 
+
+/// conexion a base 
+
+const connectMongoDB = async () => {
+    try {
+        await mongoose.connect('mongodb://localhost:27017/products?retryWrites=true&w=majority');
+        console.log("Conectado con exito a MongoDB usando Moongose.");
+    } catch (error) {
+        console.error("No se pudo conectar a la BD usando Moongose: " + error);
+        process.exit();
+    }
+};connectMongoDB();
+
+///json middleware
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
-//// routers app
+//Rutas
+app.use("/", router);
 
-app.use('/api/products', productRoutes);
-app.use('/api/carts', cartRoutes);
+
 
 // Configuración Handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 
-// Declaramos el router de las vistas 
-app.use('/', viewRoutes);
 
 // Inicializar Servidor HTTP
 const server = http.createServer(app);
@@ -40,8 +51,8 @@ io.on('connection', async (socket) => {
     socket.emit('productosActualizados', await manager.consultarProductos());
 
     // Escuchar nuevo producto
-    socket.on('nuevoProducto', async (productData) => {
-        await manager.createProduct(productData);
+    socket.on('nuevoProducto', async (data) => {
+        await manager.crearProducto(data);
         io.emit('productosActualizados', await manager.consultarProductos());
     });
 
@@ -50,7 +61,7 @@ io.on('connection', async (socket) => {
         await manager.eliminarProducto(productId);
         io.emit('productosActualizados', await manager.consultarProductos());
     });
-
+a
     socket.on('disconnect', () => {
         console.log('Cliente desconectado');
     });
@@ -62,3 +73,4 @@ server.listen(PORT, () => {
 });
 
 export { io };
+

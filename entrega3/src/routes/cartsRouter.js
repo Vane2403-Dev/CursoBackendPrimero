@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import CartsManager from '../services/cartsManager.js';
-import { io } from '../app.js'; 
+
+
 
 const router = Router();
 const manager = new CartsManager();
@@ -18,7 +19,6 @@ router.post('/', async (req, res) => {
         if (isNaN(productIdNumber)) {
             return res.status(400).send({ error: 'El productId debe ser un número válido' });
         }
-
         // Llamamos a la función para crear el carrito
         const newCart = await manager.createCart(productIdNumber);
 
@@ -76,5 +76,17 @@ router.post('/:cid/product/:pid', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 });
+
+/// ruta de las vistas 
+
+router.get('/', async (req, res) => {
+    try {
+        const products = await cartManager.getCartById;
+        res.render('carts', { cart });
+    } catch (error) {
+        res.status(500).send('Error al cargar la vista de productos en tiempo real.');
+    }
+});
+
 
 export default router;

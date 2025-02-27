@@ -17,25 +17,8 @@
   <button type="submit">Agregar Producto</button>
 </form>
 
-<div id="product-list">
-  
-{{#each products}}
-  <div class="product-card">
-    <h2>{{title}}</h2>
-    <p><strong>Descripción:</strong> {{description}}</p>
-    <p><strong>Categoría:</strong> {{category}}</p>
-    <p><strong>Precio:</strong> ${{price}}</p>
-    <p><strong>Stock:</strong> {{stock}}</p>
-    {{#if thumbnail}}
-      <img src="{{thumbnail}}" alt="Imagen de {{title}}">
-    {{else}}
-      <p>Sin imagen disponible</p>
-    {{/if}}
-    <button class="delete-button" data-id="{{id}}">Eliminar</button>
-  </div>
-{{/each}}
 
-</div>
+<div id="product-list"></div>
 
 <style>
   .product-card {
