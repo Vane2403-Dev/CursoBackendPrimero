@@ -9,19 +9,6 @@ const manager = new ProductsManager();
 // Obtener todos los productos
 
 
-// Rutas para las vistas
-router.get('/page', async (req, res) => {
-    let page= parseInt(req.query.page) || 1;
-    let Limit=  parseInt(req.query.limit) || 4;
-    try {
-        const products = await manager.consultarProductosPaginados(page, Limit);
-    // validacion de extremos en la plantilla de hbs
-
-        res.render('Products', { products });
-    } catch (error) {
-        res.status(500).send('Error al cargar la vista de productos.');
-    }
-});
 
 router.get('/realtimeproducts', async (req, res) => {
     try {
@@ -41,8 +28,28 @@ router.get('/realtimeproducts', async (req, res) => {
 // Obtener un producto 
 router.get('/', async (req, res) => {
     try {
-        const products = await manager.consultarProductos();
-        res.render('Products', { products });
+        const page= parseInt(req.query.page) || 1;
+        const limit=  parseInt(req.query.limit) || 4;
+     
+        console.log('Params:', req.query)
+        console.log(page , limit);
+
+        const result  = await manager.consultarProductosPaginados(page,limit);
+       
+        // Navegabilidad de paginas
+    result.prevLink = result.hasPrevPage ? `http://localhost:8080/products?page=${result.prevPage}` : ''
+    result.nextLink = result.hasNextPage ? `http://localhost:8080/products?page=${result.nextPage}` : ''
+
+
+    // validacion de extremos en la plantilla de hbs
+    result.isValid = !(page <= 0 || page > result.totalPages)
+
+   /* res.json(result)*/
+   console.log(result);
+
+
+
+    res.render( "Products", {  result});
     } catch (error) {
         res.status(500).send('Error al cargar la vista de productos.');
     }
@@ -86,6 +93,8 @@ router.post('/', async (req, res) => {
         res.status(500).send('Error al crear el producto.');
     }
 });
+
+
 
 export default router;
 

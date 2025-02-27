@@ -48,4 +48,3 @@ document.addEventListener('click', (event) => {
         socket.emit('eliminarProducto', productId);
     }
 });
-

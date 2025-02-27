@@ -41,10 +41,13 @@ async consultarProductos() {
 
 
     // Consultar todos los productos paginados
-    async  consultarProductosPaginados(page, limit) {
+    async  consultarProductosPaginados(page, limit = 4) {
         try {
+            const pages = page 
+            const limits = limit 
+            const products = await Product.paginate({}, { limit: limits, page: pages, lean: true });
         
-            const products = await Product.paginate({}, { limit: limit, page: page, lean: true })
+
             console.log("Productos consultados con éxito:", products);  // Devuelve la lista de productos y el objeto de paginación
             return products; // Devuelve todo el objeto de paginación
         } catch (error) {
