@@ -1,6 +1,7 @@
 # 🛒 Backend de Productos y Carrito  
 
 Este es un **backend inicial** desarrollado con **Node.js**, **Express**, **Handlebars**, **Socket.io** y **MongoDB**. Forma parte de mi aprendizaje en **desarrollo backend**, y aunque tengo que recursar el curso por usar MongoDB local en lugar de Atlas, esta experiencia me ayudó a comprender mejor la arquitectura backend.  
+No me importa recursar porque backend y arquitectura es lo que mas me gusta.. en otro repo seguro encontraran Backend II, aca vemos mucho mas de arquitectura multicapas 🤯
 
 ## 🚀 Sobre el Proyecto  
 Este sistema permite gestionar un catálogo de productos y un carrito de compras en tiempo real mediante **WebSockets**.  
@@ -19,7 +20,4 @@ Este sistema permite gestionar un catálogo de productos y un carrito de compras
 - **MongoDB + Mongoose**  
 - **WebSockets**  
 
-## 🔧 Instalación y Uso  
-1. Clona el repositorio:  
-   ```sh
-   git clone https://github.com/tuusuario/backend-productos-carrito.git
+
